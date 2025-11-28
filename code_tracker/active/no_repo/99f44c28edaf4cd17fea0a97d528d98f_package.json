@@ -1,0 +1,14 @@
+–{
+  "name": "live-mauzin-backend",
+  "version": "1.0.0",
+  "description": "Signaling server for Live Mauzin App",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.7.2"
+  }
+}
+–*cascade082Dfile:///e:/Projects_2743/MobileApps/Live_Muazin/backend/package.json

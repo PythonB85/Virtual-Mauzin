@@ -1,0 +1,17 @@
+# Audio Broadcasting App - Task List
+
+- [ ] Planning
+    - [ ] Create implementation plan
+    - [ ] User approval
+- [ ] Project Setup
+    - [ ] Initialize Vite project (Frontend)
+    - [ ] Initialize Node.js project (Signaling Server)
+- [ ] Implementation
+    - [ ] Build Signaling Server
+    - [ ] Build Frontend UI (Landing, Broadcaster, Listener)
+    - [ ] Implement Audio Capture (Broadcaster)
+    - [ ] Implement WebRTC Logic (PeerJS)
+    - [ ] Implement Audio Playback (Listener)
+- [ ] Verification
+    - [ ] Test connection between two browser instances
+    - [ ] Verify audio quality and latency
