@@ -17,7 +17,7 @@ function App() {
 
   return (
     <div className="card" style={{ textAlign: 'center', marginTop: '40px' }}>
-      <h1>AudioCast</h1>
+      <h1>Virtual-Mauzin</h1>
       <p style={{ color: '#94a3b8', marginBottom: '40px' }}>
         Real-time high quality audio broadcasting for everyone.
       </p>

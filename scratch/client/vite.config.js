@@ -8,9 +8,6 @@ export default defineConfig({
     host: true,
     allowedHosts: [
       'localhost',
-      // Add your ngrok URL here when using ngrok
-      'unsplendid-ofelia-ponderously.ngrok-free.dev',
-      // Example: 'your-ngrok-url.ngrok-free.app',
     ]
   }
 })
