@@ -158,11 +158,16 @@ Visit: `https://your-frontend.vercel.app`
 The app should load. Click "Start Broadcast" and check if you get a Broadcaster ID.
 
 ### 3. Test Full Flow
-1. Open broadcaster on one device
-2. Copy the Broadcaster ID
+1. Open broadcaster on one device (only one broadcaster allowed at a time!)
+2. Click "Start Broadcast"
 3. Open listener on another device
-4. Paste the ID and connect
+4. Click "Join Broadcast" - it will auto-connect
 5. Start broadcasting audio
+
+**Note:** The app now uses a fixed ID system (`main-broadcast`). This means:
+- Only **one** broadcaster can be active per server instance.
+- If a second person tries to broadcast, they will get a connection error.
+- All listeners automatically connect to the active broadcaster.
 
 ---
 

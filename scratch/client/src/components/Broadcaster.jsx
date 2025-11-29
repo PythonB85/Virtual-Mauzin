@@ -7,20 +7,25 @@ import { PEER_CONFIG } from '../config/peerConfig';
 const BAR_DURATIONS = [...Array(5)].map(() => `${0.5 + Math.random()}s`);
 
 const Broadcaster = ({ onBack }) => {
-    const [peerId, setPeerId] = useState('');
     const [isStreaming, setIsStreaming] = useState(false);
     const [listenerCount, setListenerCount] = useState(0);
     const [error, setError] = useState('');
+    const [isConnecting, setIsConnecting] = useState(true);
 
     const peerRef = useRef(null);
     const streamRef = useRef(null);
     const connectionsRef = useRef([]);
 
+    // Fixed broadcaster ID - only one broadcaster at a time
+    const BROADCASTER_ID = 'main-broadcast';
+
     useEffect(() => {
-        const peer = new Peer(null, PEER_CONFIG);
+        // Use fixed ID instead of auto-generated
+        const peer = new Peer(BROADCASTER_ID, PEER_CONFIG);
 
         peer.on('open', (id) => {
-            setPeerId(id);
+            console.log('Broadcaster connected with ID:', id);
+            setIsConnecting(false);
         });
 
         peer.on('connection', (conn) => {
@@ -79,11 +84,6 @@ const Broadcaster = ({ onBack }) => {
         }
     };
 
-    const copyToClipboard = () => {
-        navigator.clipboard.writeText(peerId);
-        // Could add a toast here
-    };
-
     return (
         <div className="card">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
@@ -95,10 +95,11 @@ const Broadcaster = ({ onBack }) => {
 
             {error && <div style={{ color: '#ef4444', marginBottom: '10px', textAlign: 'center' }}>{error}</div>}
 
-            <div className="peer-id-display" onClick={copyToClipboard}>
-                {peerId || 'Connecting...'}
-            </div>
-            <div className="copy-hint">Tap ID to copy and share with listeners</div>
+            {isConnecting && (
+                <div style={{ color: '#94a3b8', marginBottom: '20px', textAlign: 'center' }}>
+                    Connecting to broadcast server...
+                </div>
+            )}
 
             <div className="visualizer">
                 {BAR_DURATIONS.map((duration, i) => (

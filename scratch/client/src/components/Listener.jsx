@@ -7,19 +7,23 @@ import { PEER_CONFIG } from '../config/peerConfig';
 const BAR_DURATIONS = [...Array(5)].map(() => `${0.4 + Math.random()}s`);
 
 const Listener = ({ onBack }) => {
-    const [targetId, setTargetId] = useState('');
     const [isConnected, setIsConnected] = useState(false);
-    const [status, setStatus] = useState('Disconnected');
+    const [status, setStatus] = useState('Connecting...');
     const [error, setError] = useState('');
 
     const peerRef = useRef(null);
     const audioRef = useRef(null);
 
+    // Fixed broadcaster ID - same as broadcaster uses
+    const BROADCASTER_ID = 'main-broadcast';
+
     useEffect(() => {
         const peer = new Peer(null, PEER_CONFIG);
 
         peer.on('open', () => {
-            // peerId is set but not used in this component
+            console.log('Listener connected, attempting to join broadcast...');
+            // Automatically connect to the fixed broadcaster ID
+            connectToBroadcaster();
         });
 
         peer.on('call', (call) => {
@@ -48,17 +52,16 @@ const Listener = ({ onBack }) => {
     }, []);
 
     const connectToBroadcaster = () => {
-        if (!targetId) {
-            setError('Please enter a Broadcaster ID');
+        if (!peerRef.current) {
+            setError('Peer not initialized');
             return;
         }
 
         setError('');
-        setStatus('Connecting...');
+        setStatus('Connecting to broadcast...');
 
-        // We connect to the broadcaster so they know we exist.
-        // The broadcaster will then call us back with the stream.
-        const conn = peerRef.current.connect(targetId);
+        // Connect to the fixed broadcaster ID
+        const conn = peerRef.current.connect(BROADCASTER_ID);
 
         conn.on('open', () => {
             setIsConnected(true);
@@ -72,8 +75,9 @@ const Listener = ({ onBack }) => {
 
         conn.on('error', (err) => {
             console.error("Connection error:", err);
-            setError("Could not connect to broadcaster.");
+            setError("Could not connect to broadcaster. Make sure broadcast is active.");
             setIsConnected(false);
+            setStatus('Connection Failed');
         });
     };
 
@@ -87,21 +91,17 @@ const Listener = ({ onBack }) => {
             </div>
 
             {!isConnected ? (
-                <>
-                    <div style={{ marginBottom: '20px' }}>
-                        <label style={{ display: 'block', marginBottom: '8px', color: '#94a3b8' }}>Broadcaster ID</label>
-                        <input
-                            type="text"
-                            placeholder="Enter ID to join..."
-                            value={targetId}
-                            onChange={(e) => setTargetId(e.target.value)}
-                        />
+                <div style={{ textAlign: 'center', padding: '20px 0' }}>
+                    <div style={{ color: '#94a3b8', marginBottom: '20px' }}>
+                        {status}
                     </div>
                     {error && <div style={{ color: '#ef4444', marginBottom: '10px' }}>{error}</div>}
-                    <button className="btn-primary" onClick={connectToBroadcaster}>
-                        Connect
-                    </button>
-                </>
+                    {error && (
+                        <button className="btn-primary" onClick={connectToBroadcaster}>
+                            Retry Connection
+                        </button>
+                    )}
+                </div>
             ) : (
                 <div style={{ textAlign: 'center', padding: '20px 0' }}>
                     <div className={`status-indicator ${status.includes('Receiving') ? 'status-connected' : 'status-disconnected'}`} />
