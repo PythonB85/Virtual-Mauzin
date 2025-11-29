@@ -46,3 +46,7 @@ browserAllowlist.txt
 # Mobile Builds
 android/app/build/
 android/.gradle/
+
+# Fly.io
+fly.toml
+.fly/

@@ -52,6 +52,13 @@ Then run the app from Android Studio on an emulator or real device.
 
 ## 📖 Documentation
 
+### For Cloud Deployment
+
+- **[FLY_IO_QUICK_START.md](FLY_IO_QUICK_START.md)** - Quick start guide for Fly.io deployment
+- **[FLY_IO_DEPLOYMENT.md](FLY_IO_DEPLOYMENT.md)** - Complete Fly.io deployment guide
+- **[FLY_IO_ARCHITECTURE.md](FLY_IO_ARCHITECTURE.md)** - Architecture and technical details
+- **[CLOUD_DEPLOYMENT_GUIDE.md](CLOUD_DEPLOYMENT_GUIDE.md)** - General cloud deployment guide (Vercel, Railway, Render)
+
 ### For Mobile App Development & Deployment
 
 - **[MOBILE_DEPLOYMENT_GUIDE.md](MOBILE_DEPLOYMENT_GUIDE.md)** - Complete guide for deploying to Google Play Store
@@ -136,6 +143,40 @@ See the comprehensive [MOBILE_DEPLOYMENT_GUIDE.md](MOBILE_DEPLOYMENT_GUIDE.md) f
 - Creating Google Play Console account
 - Uploading and publishing your app
 - Managing updates and releases
+
+## ☁️ Deploying to Cloud (Fly.io)
+
+Deploy your Virtual Mauzin app to the cloud for global access:
+
+### Quick Deploy to Fly.io
+
+1. **Install Fly.io CLI** (PowerShell as Administrator):
+   ```powershell
+   iwr https://fly.io/install.ps1 -useb | iex
+   fly auth login
+   ```
+
+2. **Deploy Backend**:
+   ```powershell
+   cd .\scratch\server\
+   fly launch --no-deploy
+   fly secrets set NODE_ENV=production ALLOWED_ORIGINS=*
+   fly deploy
+   ```
+
+3. **Deploy Frontend**:
+   ```powershell
+   cd .\scratch\client\
+   fly launch --no-deploy
+   fly deploy
+   ```
+
+See [FLY_IO_QUICK_START.md](FLY_IO_QUICK_START.md) for detailed instructions.
+
+### Alternative Cloud Platforms
+
+- **Vercel** (Frontend) + **Railway** (Backend) - See [CLOUD_DEPLOYMENT_GUIDE.md](CLOUD_DEPLOYMENT_GUIDE.md)
+- **Netlify** (Frontend) + **Render** (Backend) - See [CLOUD_DEPLOYMENT_GUIDE.md](CLOUD_DEPLOYMENT_GUIDE.md)
 
 ## 📱 App Information
 
